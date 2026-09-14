@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Booking Management System - DBMS Project</title>
+  <meta name="description" content="Frontend layout for College DBMS Project - Hotel Booking Management System representing 13 ER Diagram Entities">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">🏨</div>
+        <div class="sidebar-brand">
+          <h2>GrandStay</h2>
+          <p>DBMS Project</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-label">Main Navigation</li>
+        
+        <li class="menu-item">
+          <a href="#" class="menu-link active" data-view="dashboard">
+            <span class="menu-icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="menu-label">Entities (ER Model)</li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="hotels">
+            <span class="menu-icon">🏢</span>
+            <span>Hotels</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="room-types">
+            <span class="menu-icon">🛏️</span>
+            <span>Room Types</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="rooms">
+            <span class="menu-icon">🔑</span>
+            <span>Rooms</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="room-upgrade">
+            <span class="menu-icon">🛋️</span>
+            <span>Room Upgrade</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="maintenance">
+            <span class="menu-icon">🛠️</span>
+            <span>Maintenance</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="bookings">
+            <span class="menu-icon">📅</span>
+            <span>Bookings</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="payments">
+            <span class="menu-icon">💳</span>
+            <span>Payments</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="cancellations">
+            <span class="menu-icon">❌</span>
+            <span>Cancellations</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="loyalty">
+            <span class="menu-icon">⭐</span>
+            <span>Loyalty & Rewards</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="digital-checkin">
+            <span class="menu-icon">📲</span>
+            <span>Digital Check-in</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="recommendations">
+            <span class="menu-icon">🤖</span>
+            <span>AI Recommendations</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="notifications">
+            <span class="menu-icon">🔔</span>
+            <span>Notifications</span>
+            <span id="unread-notifications-badge" class="badge badge-danger" style="margin-left: auto; padding: 2px 7px; font-size: 0.7rem; border-radius: 10px;">3</span>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link" data-view="customers">
+            <span class="menu-icon">👤</span>
+            <span>Customer Profile</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="mobile-toggle" class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+          <div class="header-title">
+            <h1>Hotel Booking Management System</h1>
+            <p id="header-subtitle">B.Tech DBMS Project • Entity-Relational Interface</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="dbms-tag" style="cursor:pointer;" onclick="switchView('notifications')" title="View Notifications">
+            <span>🔔 Notifications <strong id="header-notif-count" style="color:white; background:var(--accent-danger); padding:1px 6px; border-radius:10px; font-size:0.7rem;">3</strong></span>
+          </div>
+          <div class="dbms-tag">
+            <span>⚡ DBMS Schema Ready</span>
+          </div>
+          <div class="user-badge">
+            <div class="avatar">AD</div>
+            <div class="user-info">
+              <span class="user-name">Project Admin</span>
+              <span class="user-role">B.Tech CSE</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Views Container -->
+      <main class="content-area">
+
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="view-dashboard" class="view-section active">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">System Overview</h2>
+              <p class="section-subtitle">Real-time statistics across all database entities</p>
+            </div>
+          </div>
+
+          <!-- 4 Required Dashboard Cards -->
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Hotels</h3>
+                <div class="stat-value" id="stat-hotels-count">0</div>
+                <div class="stat-trend trend-neutral">Entity: Hotel</div>
+              </div>
+              <div class="stat-icon-wrapper icon-hotels">🏢</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Rooms</h3>
+                <div class="stat-value" id="stat-rooms-count">0</div>
+                <div class="stat-trend trend-neutral">Entity: Room</div>
+              </div>
+              <div class="stat-icon-wrapper icon-rooms">🛏️</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Customers</h3>
+                <div class="stat-value" id="stat-customers-count">0</div>
+                <div class="stat-trend trend-neutral">Entity: Customer</div>
+              </div>
+              <div class="stat-icon-wrapper icon-customers">👤</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Bookings</h3>
+                <div class="stat-value" id="stat-bookings-count">0</div>
+                <div class="stat-trend trend-neutral">Entity: Booking</div>
+              </div>
+              <div class="stat-icon-wrapper icon-bookings">📅</div>
+            </div>
+          </div>
+
+          <!-- Dashboard Layout: Recent Bookings & ER Entity Map -->
+          <div class="dashboard-layout">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Recent Bookings Preview</h3>
+                <button class="btn btn-secondary" onclick="switchView('bookings')">View All</button>
+              </div>
+              <div class="table-responsive">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Booking ID</th>
+                      <th>Customer</th>
+                      <th>Room</th>
+                      <th>Check-In</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-bookings-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">ER Schema & Modules (16/16)</h3>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">
+                DBMS entities & feature modules implemented:
+              </p>
+              <div class="entities-grid">
+                <div class="entity-chip"><span class="chip-num">1</span><span>Customer</span></div>
+                <div class="entity-chip"><span class="chip-num">2</span><span>Hotel</span></div>
+                <div class="entity-chip"><span class="chip-num">3</span><span>Hotel Image</span></div>
+                <div class="entity-chip"><span class="chip-num">4</span><span>Room Type</span></div>
+                <div class="entity-chip"><span class="chip-num">5</span><span>Room Type Image</span></div>
+                <div class="entity-chip"><span class="chip-num">6</span><span>Room</span></div>
+                <div class="entity-chip"><span class="chip-num">7</span><span>Booking</span></div>
+                <div class="entity-chip"><span class="chip-num">8</span><span>Payment</span></div>
+                <div class="entity-chip"><span class="chip-num">9</span><span>Cancellation</span></div>
+                <div class="entity-chip"><span class="chip-num">10</span><span>Loyalty</span></div>
+                <div class="entity-chip"><span class="chip-num">11</span><span>Reward Transaction</span></div>
+                <div class="entity-chip"><span class="chip-num">12</span><span>Digital Check-in</span></div>
+                <div class="entity-chip"><span class="chip-num">13</span><span>AI Recommendation</span></div>
+                <div class="entity-chip"><span class="chip-num">14</span><span>Room Maintenance</span></div>
+                <div class="entity-chip"><span class="chip-num">15</span><span>Room Upgrade</span></div>
+                <div class="entity-chip"><span class="chip-num">16</span><span>Notifications</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. HOTELS VIEW (Entities: Hotel & Hotel Image) -->
+        <section id="view-hotels" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Hotels Management</h2>
+              <p class="section-subtitle">Database Entities: <code>Hotel</code> & <code>Hotel Image</code></p>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <input type="text" id="search-hotels" class="search-input" placeholder="Search hotel by name or location..." onkeyup="filterTable('search-hotels', 'hotels-table')">
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table" id="hotels-table">
+                <thead>
+                  <tr>
+                    <th>Hotel ID</th>
+                    <th>Hotel Name & Email</th>
+                    <th>Location</th>
+                    <th>Star Rating</th>
+                    <th>Total Rooms</th>
+                    <th>Hotel Images (Entity)</th>
+                    <th>Phone</th>
+                  </tr>
+                </thead>
+                <tbody id="hotels-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. ROOM TYPES VIEW (Entities: Room Type & Room Type Image) -->
+        <section id="view-room-types" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Room Types Management</h2>
+              <p class="section-subtitle">Database Entities: <code>Room Type</code> & <code>Room Type Image</code></p>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Type ID</th>
+                    <th>Hotel ID</th>
+                    <th>Type Name</th>
+                    <th>Base Price</th>
+                    <th>Max Occupancy</th>
+                    <th>Amenities</th>
+                    <th>Sample Images</th>
+                  </tr>
+                </thead>
+                <tbody id="room-types-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. ROOMS VIEW (Entity: Room) -->
+        <section id="view-rooms" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Rooms Directory</h2>
+              <p class="section-subtitle">Database Entity: <code>Room</code></p>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Room ID</th>
+                    <th>Hotel ID</th>
+                    <th>Room Number</th>
+                    <th>Room Type ID</th>
+                    <th>Floor</th>
+                    <th>Availability Status</th>
+                  </tr>
+                </thead>
+                <tbody id="rooms-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ROOM UPGRADE VIEW -->
+        <section id="view-room-upgrade" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Room Upgrade Hub</h2>
+              <p class="section-subtitle">Database Module: <code>Room Upgrade & Inventory Management</code></p>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <label for="upgrade-booking-select" style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Select Active Booking:</label>
+              <select id="upgrade-booking-select" class="select-input" onchange="renderRoomUpgradeView()" style="min-width:240px;">
+                <!-- Populated dynamically via JS -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Current Room Banner Card -->
+          <div id="current-room-panel" class="current-room-card">
+            <!-- Dynamic current room panel content -->
+          </div>
+
+          <!-- Upgrade Options Header & Filter Controls -->
+          <div class="ai-results-header" style="margin-top:28px;">
+            <div>
+              <h3 style="font-size:1.15rem; font-weight:700;">Available Room Upgrade Options</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Select a higher category room to instantly upgrade your stay</p>
+            </div>
+            
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <select id="filter-upgrade-price" class="select-input" onchange="renderUpgradeOptions()">
+                <option value="999999">All Price Ranges</option>
+                <option value="3000">Under +₹3,000 / night</option>
+                <option value="10000">Under +₹10,000 / night</option>
+              </select>
+
+              <select id="sort-upgrade-options" class="select-input" onchange="renderUpgradeOptions()">
+                <option value="price-asc">Sort: Price (Low to High)</option>
+                <option value="price-desc">Sort: Price (High to Low)</option>
+                <option value="occupancy">Sort: Max Occupancy</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Upgrade Cards Grid -->
+          <div class="dashboard-grid" id="upgrade-options-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <!-- Dynamic upgrade options rendered via JS -->
+          </div>
+        </section>
+
+        <!-- MAINTENANCE TRACKING VIEW -->
+        <section id="view-maintenance" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Maintenance Tracking</h2>
+              <p class="section-subtitle">Database Entity / Module: <code>Room Maintenance</code></p>
+            </div>
+            <button class="btn btn-primary" onclick="openReportMaintenanceModal()">
+              <span>➕ Report Maintenance</span>
+            </button>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="filter-bar">
+            <input type="text" id="search-maintenance" class="search-input" placeholder="Search ID, Room #, Staff, or Issue..." onkeyup="filterMaintenanceTable()">
+            
+            <select id="filter-mnt-status" class="select-input" onchange="filterMaintenanceTable()">
+              <option value="">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
+            </select>
+
+            <select id="filter-mnt-priority" class="select-input" onchange="filterMaintenanceTable()">
+              <option value="">All Priorities</option>
+              <option value="Urgent">Urgent</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table" id="maintenance-table">
+                <thead>
+                  <tr>
+                    <th>Maintenance ID</th>
+                    <th>Room #</th>
+                    <th>Issue Description</th>
+                    <th>Reported Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned Staff</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="maintenance-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. BOOKINGS VIEW (Entity: Booking) -->
+        <section id="view-bookings" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Bookings Registry</h2>
+              <p class="section-subtitle">Database Entity: <code>Booking</code></p>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <input type="text" id="search-bookings" class="search-input" placeholder="Search by booking ID or customer..." onkeyup="filterTable('search-bookings', 'bookings-table')">
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table" id="bookings-table">
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Room ID</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Total Amount</th>
+                    <th>Booking Status</th>
+                  </tr>
+                </thead>
+                <tbody id="bookings-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. PAYMENTS VIEW (Entity: Payment) -->
+        <section id="view-payments" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Payments Ledger</h2>
+              <p class="section-subtitle">Database Entity: <code>Payment</code></p>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Payment ID</th>
+                    <th>Booking ID</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Transaction Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="payments-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. CANCELLATIONS VIEW (Entity: Cancellation) -->
+        <section id="view-cancellations" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Cancellations Log</h2>
+              <p class="section-subtitle">Database Entity: <code>Cancellation</code></p>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Cancellation ID</th>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Reason</th>
+                    <th>Refund Amount</th>
+                    <th>Cancellation Fee</th>
+                    <th>Cancelled Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="cancellations-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. LOYALTY VIEW (Entities: Loyalty & Reward Transaction) -->
+        <section id="view-loyalty" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Loyalty Programs & Rewards</h2>
+              <p class="section-subtitle">Database Entities: <code>Loyalty</code> & <code>Reward Transaction</code></p>
+            </div>
+          </div>
+          
+          <div class="card-panel" style="margin-bottom: 24px;">
+            <h3 class="panel-title" style="margin-bottom:16px;">Customer Loyalty Tier Summary</h3>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Loyalty ID</th>
+                    <th>Customer Name</th>
+                    <th>Membership Tier</th>
+                    <th>Points Balance</th>
+                    <th>Lifetime Points</th>
+                  </tr>
+                </thead>
+                <tbody id="loyalty-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <h3 class="panel-title" style="margin-bottom:16px;">Reward Transactions Audit Log</h3>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Transaction ID</th>
+                    <th>Loyalty ID</th>
+                    <th>Type</th>
+                    <th>Points</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="reward-transactions-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. DIGITAL CHECK-IN VIEW (Entity: Digital Check-in) -->
+        <section id="view-digital-checkin" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Digital Check-in Hub</h2>
+              <p class="section-subtitle">Database Entity: <code>Digital Check-in</code></p>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Check-in ID</th>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Room Assigned</th>
+                    <th>ID Verification</th>
+                    <th>Digital Key Pass</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="digital-checkins-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10. RECOMMENDATIONS VIEW (Entity: AI Recommendation / Decision Support) -->
+        <section id="view-recommendations" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">AI Recommendation Engine</h2>
+              <p class="section-subtitle">Database Entity: <code>AI Recommendation / Decision Support</code> • Smart Matcher</p>
+            </div>
+          </div>
+
+          <!-- Customer Preference Selection Card -->
+          <div class="ai-pref-card">
+            <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:flex; align-items:center; gap:8px;">
+              <span>🎯 Select Your Travel Preferences</span>
+            </h3>
+            <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:18px;">
+              Configure your desired location, budget, room type, and amenities to generate AI-matched hotel recommendations.
+            </p>
+
+            <form id="form-ai-preferences" onsubmit="event.preventDefault(); generateAiRecommendations();">
+              <div class="ai-pref-grid">
+                
+                <!-- Location Dropdown -->
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="ai-pref-location">Preferred Location</label>
+                  <select id="ai-pref-location" class="form-control" onchange="generateAiRecommendations()">
+                    <option value="">All Locations</option>
+                    <option value="Marine Drive, Mumbai">Marine Drive, Mumbai</option>
+                    <option value="Banjara Hills, Hyderabad">Banjara Hills, Hyderabad</option>
+                    <option value="Calangute, Goa">Calangute, Goa</option>
+                  </select>
+                </div>
+
+                <!-- Budget Range Dropdown -->
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="ai-pref-budget">Max Budget per Night</label>
+                  <select id="ai-pref-budget" class="form-control" onchange="generateAiRecommendations()">
+                    <option value="999999">Any Budget</option>
+                    <option value="5000">Up to ₹5,000 / night</option>
+                    <option value="10000">Up to ₹10,000 / night</option>
+                    <option value="20000">Up to ₹20,000 / night</option>
+                  </select>
+                </div>
+
+                <!-- Room Type Dropdown -->
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="ai-pref-roomtype">Preferred Room Type</label>
+                  <select id="ai-pref-roomtype" class="form-control" onchange="generateAiRecommendations()">
+                    <option value="">All Room Types</option>
+                    <option value="Deluxe King Suite">Deluxe King Suite</option>
+                    <option value="Executive Twin Room">Executive Twin Room</option>
+                    <option value="Presidential Luxury Suite">Presidential Luxury Suite</option>
+                  </select>
+                </div>
+
+                <!-- Star Rating Dropdown -->
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="ai-pref-stars">Minimum Star Rating</label>
+                  <select id="ai-pref-stars" class="form-control" onchange="generateAiRecommendations()">
+                    <option value="0">Any Star Rating</option>
+                    <option value="5">⭐ 5 Stars Only</option>
+                    <option value="4">⭐ 4 Stars & Above</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Preferred Amenities Selector -->
+              <div class="form-group" style="margin-top:14px; margin-bottom:20px;">
+                <label>Preferred Room Amenities & Features</label>
+                <div class="amenities-pill-grid">
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Sea View" onchange="generateAiRecommendations()">
+                    <span>🌊 Sea View</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Free WiFi" onchange="generateAiRecommendations()">
+                    <span>📶 Free WiFi</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Jacuzzi" onchange="generateAiRecommendations()">
+                    <span>🛁 Jacuzzi</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Butler Service" onchange="generateAiRecommendations()">
+                    <span>🍷 Butler Service</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Private Bar" onchange="generateAiRecommendations()">
+                    <span>🍸 Private Bar</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="City View" onchange="generateAiRecommendations()">
+                    <span>🏙️ City View</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Work Desk" onchange="generateAiRecommendations()">
+                    <span>💻 Work Desk</span>
+                  </label>
+                  <label class="amenity-chip-label">
+                    <input type="checkbox" class="ai-amenity-checkbox" value="Balcony" onchange="generateAiRecommendations()">
+                    <span>🌅 Balcony</span>
+                  </label>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary" onclick="generateAiRecommendations()" style="width:100%; padding:12px; font-size:1rem; font-weight:700; background:linear-gradient(135deg, var(--accent-purple), var(--accent-primary)); border:none; box-shadow:0 4px 14px rgba(139, 92, 246, 0.4);">
+                <span>✨ Get AI Recommendations</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Recommendation Results Output -->
+          <div class="ai-results-header">
+            <div>
+              <h3 style="font-size:1.15rem; font-weight:700;">Top AI Recommended Stays</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted);" id="ai-results-count-text">Sorted by AI Match Score</p>
+            </div>
+          </div>
+
+          <div class="dashboard-grid" id="ai-recommendations-results" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <!-- Dynamic AI Recommendation Cards rendered via JS -->
+          </div>
+
+          <!-- Section for ER Entity Decision Support Audit Records -->
+          <div class="card-panel" style="margin-top:32px;">
+            <div class="panel-header">
+              <h3 class="panel-title">AI Decision Support Audit Records (Customer Profiles)</h3>
+            </div>
+            <div class="ai-cards-grid" id="ai-recommendations-grid">
+              <!-- Entity records rendered via script.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- PERSONALIZED NOTIFICATIONS VIEW -->
+        <section id="view-notifications" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Personalized Notifications</h2>
+              <p class="section-subtitle">Real-time alerts, receipts, upgrade offers & system updates</p>
+            </div>
+            <button class="btn btn-secondary" onclick="markAllNotificationsAsRead()">
+              <span>✔ Mark All as Read</span>
+            </button>
+          </div>
+
+          <!-- Category Filter Tabs Bar -->
+          <div class="notif-filter-bar" id="notif-filter-bar">
+            <button class="notif-filter-pill active" onclick="filterNotifications('All', this)">All Notifications</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Unread', this)">Unread</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Booking', this)">📅 Bookings</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Payment', this)">💳 Payments</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Upgrade', this)">🛋️ Upgrades</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Maintenance', this)">🛠️ Maintenance</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Loyalty', this)">⭐ Loyalty</button>
+            <button class="notif-filter-pill" onclick="filterNotifications('Offers', this)">🎁 Special Offers</button>
+          </div>
+
+          <!-- Notification Cards List -->
+          <div class="notif-list" id="notifications-list-container">
+            <!-- Dynamic Notification Cards rendered via JS -->
+          </div>
+        </section>
+
+        <!-- 11. CUSTOMER PROFILE VIEW (Entity: Customer) -->
+        <section id="view-customers" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Customer Directory</h2>
+              <p class="section-subtitle">Database Entity: <code>Customer</code></p>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <input type="text" id="search-customers" class="search-input" placeholder="Search by name, email or phone..." onkeyup="filterTable('search-customers', 'customers-table')">
+          </div>
+          <div class="card-panel">
+            <div class="table-responsive">
+              <table class="custom-table" id="customers-table">
+                <thead>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Phone Number</th>
+                    <th>City</th>
+                    <th>ID Verification Proof</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: Report New Maintenance Issue -->
+  <div id="modal-report-mnt" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🛠️ Report Maintenance Issue</h3>
+        <button class="modal-close" onclick="closeModal('modal-report-mnt')">&times;</button>
+      </div>
+      <form id="form-report-mnt" onsubmit="handleReportMaintenance(event)">
+        <div class="form-group">
+          <label for="mnt-room-select">Select Room Number</label>
+          <select id="mnt-room-select" class="form-control" required>
+            <option value="">-- Choose Room --</option>
+            <option value="101">Room #101 (Floor 1)</option>
+            <option value="102">Room #102 (Floor 1)</option>
+            <option value="103">Room #103 (Floor 1)</option>
+            <option value="201">Room #201 (Floor 2)</option>
+            <option value="305">Room #305 (Floor 3)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="mnt-priority-select">Priority Level</label>
+          <select id="mnt-priority-select" class="form-control" required>
+            <option value="Urgent">🔴 Urgent</option>
+            <option value="High" selected>🟠 High</option>
+            <option value="Medium">🔵 Medium</option>
+            <option value="Low">🟢 Low</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="mnt-staff-input">Assigned Staff / Technician</label>
+          <input type="text" id="mnt-staff-input" class="form-control" placeholder="e.g. Rajesh Kumar (AC Tech)" required>
+        </div>
+
+        <div class="form-group">
+          <label for="mnt-issue-input">Issue Description</label>
+          <textarea id="mnt-issue-input" class="form-control" placeholder="Describe the fault or maintenance required..." required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-report-mnt')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: View Maintenance Details -->
+  <div id="modal-view-mnt" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>📋 Maintenance Record Details</h3>
+        <button class="modal-close" onclick="closeModal('modal-view-mnt')">&times;</button>
+      </div>
+      <div id="mnt-details-body" style="font-size:0.9rem; line-height:1.7;">
+        <!-- Dynamic detail details -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-view-mnt')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Update Status -->
+  <div id="modal-update-status" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🔄 Update Maintenance Status</h3>
+        <button class="modal-close" onclick="closeModal('modal-update-status')">&times;</button>
+      </div>
+      <form id="form-update-status" onsubmit="handleUpdateStatus(event)">
+        <input type="hidden" id="update-mnt-id">
+        <div class="form-group">
+          <label>Maintenance Record ID</label>
+          <input type="text" id="update-mnt-id-display" class="form-control" readonly style="opacity:0.7;">
+        </div>
+        <div class="form-group">
+          <label for="update-status-select">Select New Status</label>
+          <select id="update-status-select" class="form-control" required>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-update-status')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Confirm Room Upgrade -->
+  <div id="modal-confirm-upgrade" class="modal-overlay">
+    <div class="modal-box" style="max-width:540px;">
+      <div class="modal-header">
+        <h3>🛋️ Confirm Room Upgrade</h3>
+        <button class="modal-close" onclick="closeModal('modal-confirm-upgrade')">&times;</button>
+      </div>
+      <form id="form-confirm-upgrade" onsubmit="handleConfirmUpgrade(event)">
+        <input type="hidden" id="upgrade-target-booking-id">
+        <input type="hidden" id="upgrade-target-type-id">
+
+        <div id="upgrade-modal-details-body">
+          <!-- Dynamic upgrade confirmation details populated via JS -->
+        </div>
+
+        <div class="form-group" style="margin-top:16px;">
+          <label for="upgrade-payment-method">Payment Preference for Upgrade Difference</label>
+          <select id="upgrade-payment-method" class="form-control" required>
+            <option value="Pay at Check-In Counter">Pay at Check-In Counter</option>
+            <option value="Charge to UPI / Card on File">Charge to UPI / Card on File</option>
+            <option value="Deduct from Loyalty Rewards Points">Deduct from Loyalty Rewards Points</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-confirm-upgrade')">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background:linear-gradient(135deg, var(--accent-purple), var(--accent-primary)); border:none;">Confirm & Upgrade Room</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: View Notification Detail -->
+  <div id="modal-view-notif" class="modal-overlay">
+    <div class="modal-box" style="max-width:500px;">
+      <div class="modal-header">
+        <h3 id="notif-modal-title">🔔 Notification Details</h3>
+        <button class="modal-close" onclick="closeModal('modal-view-notif')">&times;</button>
+      </div>
+      <div id="notif-modal-body" style="font-size:0.9rem; line-height:1.6;">
+        <!-- Populated dynamically via JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-view-notif')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="toast-msg"></div>
+
+  <!-- Assets folder reference & Application JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>
